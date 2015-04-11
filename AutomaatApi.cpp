@@ -48,7 +48,10 @@ std::string AutomaatApi::getErrorMessage()
 
 int AutomaatApi::getAmount()
 {
-    return 50;
+    std::size_t pos = apiResponse.find(':');
+    std::string amount = apiResponse.substr(pos+1);
+
+    return std::stoi(amount);
 }
 
 std::map<std::string, std::string> AutomaatApi::getDefaultQueryArray()
