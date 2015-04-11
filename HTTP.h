@@ -12,17 +12,17 @@
 
 class HTTP {
 
-public:
-    HTTP(char const *url);
-    ~HTTP();
-    std::string getResponse();
-    void setPostData(std::string postData);
-    std::string buildQueryFromMap(std::map<std::string, std::string> queryArray);
+    public:
+        HTTP(char const *url);
+        ~HTTP();
+        std::string getResponse();
+        void setPostData(std::string postData);
+        std::string buildQueryFromMap(std::map<std::string, std::string> queryArray);
 
-private:
-    CURL *curl;
-    std::string buffer;
-    static int writer(char *data, size_t size, size_t nmemb, std::string *writerData);
+    private:
+        CURL *curl;
+        std::string buffer;
+        static int writer(char *data, size_t size, size_t nmemb, std::string *writerData);
 };
 
 #endif //_AUTOMAAT_HTTP_H_

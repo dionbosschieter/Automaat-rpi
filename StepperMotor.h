@@ -12,7 +12,6 @@ class StepperMotor {
 public:
     StepperMotor(int pin1, int pin2, int pin3, int pin4);
     ~StepperMotor();
-    void drive(bool forward);
     void forward();
     void backward();
 

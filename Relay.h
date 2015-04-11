@@ -9,14 +9,14 @@
 
 class Relay {
 
-private:
-    int pins[4];
+    private:
+        int pins[4];
 
-public:
-    Relay(int p1, int p2, int p3, int p4);
-    ~Relay();
-    void turnOn(int i);
-    void turnOff(int i);
+    public:
+        Relay(int p1, int p2, int p3, int p4);
+        ~Relay();
+        void turnOn(int i);
+        void turnOff(int i);
 
 };
 

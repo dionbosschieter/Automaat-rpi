@@ -9,15 +9,15 @@
 
 class KeyPad {
 
-private:
-    int rows[3];
-    int cols[4];
-    static char pad[3][4];
+    private:
+        int rows[3];
+        int cols[4];
+        static char pad[3][4];
 
-public:
-    KeyPad(int row1, int row2, int row3, int col1, int col2, int col3, int col4);
-    ~KeyPad();
-    char getKey();
+    public:
+        KeyPad(int row1, int row2, int row3, int col1, int col2, int col3, int col4);
+        ~KeyPad();
+        char getKey();
 };
 
 

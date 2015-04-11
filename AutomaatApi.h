@@ -10,19 +10,19 @@
 
 class AutomaatApi {
 
-public:
-    AutomaatApi(const char *apikey);
-    ~AutomaatApi();
-    void checkTicket(char *ticketnr, char *webcode);
-    bool errorHasOccured();
-    std::string getErrorMessage();
-    int getAmount();
+    public:
+        AutomaatApi(const char *apikey);
+        ~AutomaatApi();
+        void checkTicket(char *ticketnr, char *webcode);
+        bool errorHasOccured();
+        std::string getErrorMessage();
+        int getAmount();
 
-private:
-    HTTP *client;
-    const char *apikey;
-    std::map<std::string, std::string> getDefaultQueryArray();
-    std::string apiResponse;
+    private:
+        HTTP *client;
+        const char *apikey;
+        std::map<std::string, std::string> getDefaultQueryArray();
+        std::string apiResponse;
 };
 
 
