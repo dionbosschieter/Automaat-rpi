@@ -7,6 +7,8 @@
 
 #include "HTTP.h"
 #include <iostream>
+#include <string>
+#include <map>
 
 class AutomaatApi {
 

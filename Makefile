@@ -14,7 +14,7 @@ HTTP.o: HTTP.cpp HTTP.h
 	g++ -c HTTP.cpp -std=c++11
 
 AutomaatApi.o: AutomaatApi.cpp AutomaatApi.h
-	g++ -c AutomaatApi.cpp 
+	g++ -c AutomaatApi.cpp -std=c++11 
 
 StepperMotor.o: StepperMotor.cpp StepperMotor.h
 	g++ -c StepperMotor.cpp

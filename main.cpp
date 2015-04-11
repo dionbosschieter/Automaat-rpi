@@ -49,7 +49,7 @@ void showError(std::string message, Screen *s, KeyPad *k)
 void giveMoney(int amount, StepperMotor *m, Relay *r)
 {
     // calculate the times each bak needs to open
-    int bakkenAmount[4] = {50, 20, 10, 5};
+    int bakAmount[4] = {50, 20, 10, 5};
     int amountPerBak[4] = {0, 0, 0, 0};
 
     // function getAmountOfTurns() returns amountPerBak
