@@ -1,5 +1,5 @@
 # Todo
-* Send status to api 
+* Send status to api:
   * User busy
   * Normal, waiting
 
