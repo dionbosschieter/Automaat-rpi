@@ -1,6 +1,10 @@
 # Todo
-* Test with good ticket
-* Connect c++ to api
+* Remember position of each bak
+* Send bak state to api
+* Get bak state from api
+* Get amount per bak from api
+* Send status to api
+* Use remote to close each bak
 
 ![alt tag](https://raw.githubusercontent.com/dionbosschieter/Automaat-rpi/master/img/20150411_143740_HDR.jpg)
 

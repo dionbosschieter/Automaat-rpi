@@ -49,7 +49,7 @@ int main()
     wiringPiSetupGpio();
 
     Screen* screen = new Screen(14, 15, 25, 24, 23, 18);
-    AutomaatApi* api = new AutomaatApi("/*apikey-here*/");
+    AutomaatApi* api = new AutomaatApi("/* api key here */");
     KeyPad* keypad = new KeyPad(17, 27, 22, 10, 9, 11, 5);
     Bak* bak = new Bak();
     
@@ -65,7 +65,13 @@ int main()
         if(api->errorHasOccured()) {
             showError(api->getErrorMessage(), screen, keypad);
         } else {
-            bak->giveMoney(api->getAmount());
+            screen->clearScreen();
+            int amount = api->getAmount();
+            char msg[16];
+            sprintf(msg, "Giving %i EUR", amount);
+            screen->echo(msg, 0);
+            screen->echo("Please wait...", 1);
+            bak->giveMoney(amount);
         }
     }
 

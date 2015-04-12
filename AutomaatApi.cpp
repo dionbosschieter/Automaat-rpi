@@ -6,7 +6,7 @@
 
 AutomaatApi::AutomaatApi(const char *apikey)
 {
-    client = new HTTP("/*api url here*/");
+    client = new HTTP("/* api url here */");
     this->apikey = apikey;
 }
 
