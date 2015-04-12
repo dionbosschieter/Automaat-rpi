@@ -2,7 +2,7 @@ program: main.o Bak.o Relay.o AutomaatApi.o Screen.o HTTP.o StepperMotor.o KeyPa
 	g++ -o main main.o Bak.o Relay.o AutomaatApi.o Screen.o HTTP.o StepperMotor.o KeyPad.o -std=c++11 -lwiringPi -lwiringPiDev -lcurl
 
 main.o: main.cpp
-	g++ -c main.cpp
+	g++ -c main.cpp -std=c++11
 
 Relay.o: Relay.cpp Relay.h
 	g++ -c Relay.cpp
@@ -14,7 +14,7 @@ HTTP.o: HTTP.cpp HTTP.h
 	g++ -c HTTP.cpp -std=c++11
 
 Bak.o: Bak.cpp Bak.h
-    g++ -c Bak.cpp -std=c++11 
+	g++ -c Bak.cpp -std=c++11 
 
 AutomaatApi.o: AutomaatApi.cpp AutomaatApi.h
 	g++ -c AutomaatApi.cpp -std=c++11 

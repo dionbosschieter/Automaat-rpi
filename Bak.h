@@ -5,7 +5,7 @@
 #ifndef _AUTOMAAT_BAK_H
 #define _AUTOMAAT_BAK_H
 
-#include "Screen.h"
+#include "Relay.h"
 #include "StepperMotor.h"
 
 class Bak {
@@ -25,6 +25,6 @@ class Bak {
         void performMoneyDropping();
         void resetAmountPerBak();
 
-}
+};
 
 #endif //_AUTOMAAT_BAK_H_

@@ -71,7 +71,7 @@ int main()
 
     // cleanup
     delete screen;
-    delete k;
+    delete keypad;
     delete api;
     delete bak;
 
