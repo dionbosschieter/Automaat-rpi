@@ -52,7 +52,7 @@ int main()
     AutomaatApi* api = new AutomaatApi("/* api key here */");
     KeyPad* keypad = new KeyPad(17, 27, 22, 10, 9, 11, 5);
     Bak* bak = new Bak();
-    
+
     char ticketnr[16];
     char webcode[16];
 
@@ -66,7 +66,7 @@ int main()
             showError(api->getErrorMessage(), screen, keypad);
         } else {
             screen->clearScreen();
-            int amount = api->getAmount();
+            int amount = api->getTicketWinAmount();
             char msg[16];
             sprintf(msg, "Giving %i EUR", amount);
             screen->echo(msg, 0);

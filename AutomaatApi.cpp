@@ -17,20 +17,27 @@ AutomaatApi::~AutomaatApi()
 
 void AutomaatApi::checkTicket(char *ticketnr, char *webcode)
 {
-    std::map<std::string, std::string> queryArray = getDefaultQueryArray();
-    queryArray["ticketnr"] = ticketnr;
-    queryArray["webcode"] = webcode;
+    std::map<std::string, std::string> queryMap = getDefaultQueryArray();
+    queryMap["ticketnr"] = ticketnr;
+    queryMap["webcode"] = webcode;
 
-    std::string queryString = client->buildQueryFromMap(queryArray);
-    client->setPostData(queryString);
+    setApiData(queryMap);
     apiResponse = client->getResponse();
+}
+
+std::map<std::string, std::string> AutomaatApi::getDefaultQueryArray()
+{
+    std::map<std::string, std::string> queryArray;
+    queryArray["apikey"] = apikey;
+
+    return queryArray;
 }
 
 bool AutomaatApi::errorHasOccured()
 {
     if(apiResponse.size() == 0 || apiResponse.at(0) == 'E') {
         return true;
-    } 
+    }
 
     return false;
 }
@@ -46,7 +53,12 @@ std::string AutomaatApi::getErrorMessage()
     return message;
 }
 
-int AutomaatApi::getAmount()
+int AutomaatApi::getTicketWinAmount()
+{
+    return getIntegerFromApi();
+}
+
+int AutomaatApi::getIntegerFromApi()
 {
     std::size_t pos = apiResponse.find(':');
     std::string amount = apiResponse.substr(pos+1);
@@ -54,12 +66,26 @@ int AutomaatApi::getAmount()
     return std::stoi(amount);
 }
 
-std::map<std::string, std::string> AutomaatApi::getDefaultQueryArray()
+int AutomaatApi::fetchStatus()
 {
-    std::map<std::string, std::string> queryArray;
-    queryArray["apikey"] = apikey;
+    std::map<std::string, std::string> queryMap = getDefaultQueryArray();
+    setApiData(queryMap);
+    apiResponse = client->getResponse();
 
-    return queryArray;
+    return getIntegerFromApi();
 }
 
+void AutomaatApi::pushStatus(int status)
+{
+    std::map<std::string, std::string> queryMap = getDefaultQueryArray();
+    queryMap["status"] = ticketnr;
 
+    setApiData(queryMap);
+    apiResponse = client->getResponse();
+}
+
+void AutomaatApi::setApiData(std::map<std::string, std::string> queryMap)
+{
+    std::string queryString = client->buildQueryFromMap(queryMap);
+    client->setPostData(queryString);
+}

@@ -18,13 +18,18 @@ class AutomaatApi {
         void checkTicket(char *ticketnr, char *webcode);
         bool errorHasOccured();
         std::string getErrorMessage();
-        int getAmount();
+        int getTicketWinAmount();
+        int fetchStatus();
+        void pushStatus(int status);
 
     private:
         HTTP *client;
         const char *apikey;
-        std::map<std::string, std::string> getDefaultQueryArray();
         std::string apiResponse;
+
+        std::map<std::string, std::string> getDefaultQueryArray();
+        int getIntegerFromResponse();
+        void setApiData(std::map<std::string, std::string> queryMap);
 };
 
 
