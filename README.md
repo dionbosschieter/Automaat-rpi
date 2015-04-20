@@ -9,9 +9,9 @@
 
 ### Trunk
 * Remember state of each trunk
-    ** create trunk class
+    * create trunk class
 * Get/Set trunk available to api
-    ** create api methods
+    * create api methods
 
 ![alt tag](https://raw.githubusercontent.com/dionbosschieter/Automaat-rpi/master/img/20150411_143740_HDR.jpg)
 
