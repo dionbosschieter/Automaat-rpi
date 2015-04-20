@@ -7,19 +7,23 @@
 
 #include "Relay.h"
 #include "StepperMotor.h"
+#include "AutomaatApi.h"
 
 class Bak {
 
     public:
-        Bak();
+        Bak(AutomaatApi *api);
         ~Bak();
         void giveMoney(int amount);
+        void fetchBillAvailable();
+        void pushBillAvailable();
 
     private:
-        const int bakAmount[4] = {50, 20, 10, 5};
-        int amountPerBak[4] = {0, 0, 0, 0};
-        StepperMotor *m;
-        Relay *r;
+        const int trunkBilltype[4] = {50, 20, 10, 5};
+        int amountPerTrunk[4] = {0, 0, 0, 0};
+        StepperMotor *motor;
+        Relay *relay;
+        AutomaatApi *api;
 
         void calculateAmountOfTurns(int amount);
         void performMoneyDropping();

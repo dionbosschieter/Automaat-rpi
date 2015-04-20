@@ -4,16 +4,27 @@
 
 #include "Bak.h"
 
-Bak::Bak()
+Bak::Bak(AutomaatApi *api)
 {
-    m = new StepperMotor(12, 16, 20, 21);
-    r = new Relay(6, 13, 19, 26);
+    this->api = api;
+    motor = new StepperMotor(12, 16, 20, 21);
+    relay = new Relay(6, 13, 19, 26);
 }
 
 Bak::~Bak()
 {
-   delete m;
-   delete r;
+   delete motor;
+   delete relay;
+}
+
+void Bak::fetchBillAvailable()
+{
+
+}
+
+void Bak::pushBillAvailable()
+{
+    
 }
 
 void Bak::giveMoney(int amount)
@@ -26,38 +37,38 @@ void Bak::giveMoney(int amount)
 void Bak::calculateAmountOfTurns(int amount)
 {
     for(int i=0;i<4;i++) {
-        for(;;) { 
-            if(amount >= bakAmount[i]) {
-                amount -= bakAmount[i];
-                amountPerBak[i]++; // register the amount 
+        for(;;) {
+            if(amount >= trunkBilltype[i]) {
+                amount -= trunkBilltype[i];
+                amountPerTrunk[i]++; // register the amount
             }
 
-            if(bakAmount[i] > amount)
+            if(trunkBilltype[i] > amount)
                 break;
         }
     }
-   
+
 }
 
 void Bak::resetAmountPerBak()
 {
    for(int i = 0;i<4;i++) {
-       amountPerBak[i] = 0;
+       amountPerTrunk[i] = 0;
    }
 }
 
 void Bak::performMoneyDropping()
 {
     for(int i=0; i<4;i++) {
-        for(;;) { 
+        for(;;) {
             // turn until we are done with this drawer
-            if(amountPerBak[i] > 0) {
-                r->turnOn(i);
-                m->forward();
-                amountPerBak[i]--;
+            if(amountPerTrunk[i] > 0) {
+                relay->turnOn(i);
+                motor->forward();
+                amountPerTrunk[i]--;
             }
 
-            if(amountPerBak[i] == 0) {
+            if(amountPerTrunk[i] == 0) {
                 r->turnOff(i);
                 break;
             }
