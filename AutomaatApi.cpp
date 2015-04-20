@@ -17,17 +17,17 @@ AutomaatApi::~AutomaatApi()
 
 void AutomaatApi::checkTicket(char *ticketnr, char *webcode)
 {
-    std::map<std::string, std::string> queryMap = getDefaultQueryArray();
+    stringMap queryMap = getDefaultQueryArray();
     queryMap["ticketnr"] = ticketnr;
     queryMap["webcode"] = webcode;
 
-    setApiData(queryMap);
+    client->buildQueryFromMap(queryMap);
     apiResponse = client->getResponse();
 }
 
-std::map<std::string, std::string> AutomaatApi::getDefaultQueryArray()
+stringMap AutomaatApi::getDefaultQueryArray()
 {
-    std::map<std::string, std::string> queryArray;
+    stringMap queryArray;
     queryArray["apikey"] = apikey;
 
     return queryArray;
@@ -68,25 +68,19 @@ int AutomaatApi::getTicketWinAmount()
 
 int AutomaatApi::fetchStatus()
 {
-    std::map<std::string, std::string> queryMap = getDefaultQueryArray();
-    setApiData(queryMap);
+    stringMap queryMap = getDefaultQueryArray();
+    client->buildQueryFromMap(queryMap);
     apiResponse = client->getResponse();
 
     return getIntegerFromApiResponse();
 }
 
-void AutomaatApi::pushStatus(int status)
+void AutomaatApi::pushStatus(std::string status)
 {
-    std::map<std::string, std::string> queryMap = getDefaultQueryArray();
+    stringMap queryMap = getDefaultQueryArray();
     queryMap["status"] = status;
 
-    setApiData(queryMap);
+    client->buildQueryFromMap(queryMap);
     apiResponse = client->getResponse();
-}
-
-void AutomaatApi::setApiData(std::map<std::string, std::string> queryMap)
-{
-    std::string queryString = client->buildQueryFromMap(queryMap);
-    client->setPostData(queryString);
 }
 

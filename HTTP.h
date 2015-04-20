@@ -16,8 +16,7 @@ class HTTP {
         HTTP(char const *url);
         ~HTTP();
         std::string getResponse();
-        void setPostData(std::string postData);
-        std::string buildQueryFromMap(std::map<std::string, std::string> queryArray);
+        void buildQueryFromMap(std::map<std::string, std::string> queryArray);
 
     private:
         CURL *curl;

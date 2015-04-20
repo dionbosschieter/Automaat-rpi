@@ -7,8 +7,8 @@
 #include "AutomaatApi.h"
 #include "Bak.h"
 
-const int IDLE = 1;
-const int BUSY = 2;
+const std::string IDLE = "1";
+const std::string BUSY = "2";
 
 void getInput(const char *msg, char *buffer, Screen *s, KeyPad *k)
 {
@@ -63,9 +63,9 @@ int main()
     {
         bak->fetchBillAvailable();
 
-        api->pushStatus(IDLE);
+//        api->pushStatus(IDLE);
         getInput("Enter ticket nr:", ticketnr, screen, keypad);
-        api->pushStatus(BUSY);
+//        api->pushStatus(BUSY);
         getInput("Enter webcode:", webcode, screen, keypad);
 
         api->checkTicket(ticketnr, webcode);

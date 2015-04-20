@@ -43,13 +43,7 @@ int HTTP::writer(char *data, size_t size, size_t nmemb, std::string *writerData)
     return size * nmemb;
 }
 
-void HTTP::setPostData(std::string postData)
-{
-    // build the POST data and set it 
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
-}
-
-std::string HTTP::buildQueryFromMap(std::map<std::string, std::string> queryArray)
+void HTTP::buildQueryFromMap(std::map<std::string, std::string> queryArray)
 {
     std::string query;
     int i=0;
@@ -59,7 +53,9 @@ std::string HTTP::buildQueryFromMap(std::map<std::string, std::string> queryArra
         if(++i != queryArray.size()) query += "&";
     }
 
-    return query;
+    std::cout << query << std::endl;
+
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, query.c_str());
 }
 
 std::string HTTP::getResponse()

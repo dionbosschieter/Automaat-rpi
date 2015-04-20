@@ -10,6 +10,8 @@
 #include <string>
 #include <map>
 
+typedef std::map<std::string, std::string> stringMap;
+
 class AutomaatApi {
 
     public:
@@ -20,16 +22,15 @@ class AutomaatApi {
         std::string getErrorMessage();
         int getTicketWinAmount();
         int fetchStatus();
-        void pushStatus(int status);
+        void pushStatus(std::string status);
 
     private:
         HTTP *client;
         const char *apikey;
         std::string apiResponse;
 
-        std::map<std::string, std::string> getDefaultQueryArray();
+        stringMap getDefaultQueryArray();
         int getIntegerFromApiResponse();
-        void setApiData(std::map<std::string, std::string> queryMap);
 };
 
 
