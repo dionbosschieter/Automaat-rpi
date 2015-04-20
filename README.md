@@ -2,10 +2,10 @@
 
 ### Global bak
 * Get status from api:
-    ** in a seperate thread
+    * in a seperate thread
 * Send status to api:
-    ** User busy
-    ** Normal, waiting
+    * User busy
+    * Normal, waiting
 
 ### Trunk
 * Remember state of each trunk
