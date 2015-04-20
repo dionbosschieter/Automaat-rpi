@@ -53,17 +53,17 @@ std::string AutomaatApi::getErrorMessage()
     return message;
 }
 
-int AutomaatApi::getTicketWinAmount()
-{
-    return getIntegerFromApi();
-}
-
-int AutomaatApi::getIntegerFromApi()
+int AutomaatApi::getIntegerFromApiResponse()
 {
     std::size_t pos = apiResponse.find(':');
     std::string amount = apiResponse.substr(pos+1);
 
     return std::stoi(amount);
+}
+
+int AutomaatApi::getTicketWinAmount()
+{
+    return getIntegerFromApiResponse();
 }
 
 int AutomaatApi::fetchStatus()
@@ -72,13 +72,13 @@ int AutomaatApi::fetchStatus()
     setApiData(queryMap);
     apiResponse = client->getResponse();
 
-    return getIntegerFromApi();
+    return getIntegerFromApiResponse();
 }
 
 void AutomaatApi::pushStatus(int status)
 {
     std::map<std::string, std::string> queryMap = getDefaultQueryArray();
-    queryMap["status"] = ticketnr;
+    queryMap["status"] = status;
 
     setApiData(queryMap);
     apiResponse = client->getResponse();
@@ -89,3 +89,4 @@ void AutomaatApi::setApiData(std::map<std::string, std::string> queryMap)
     std::string queryString = client->buildQueryFromMap(queryMap);
     client->setPostData(queryString);
 }
+

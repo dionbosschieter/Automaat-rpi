@@ -28,7 +28,7 @@ class AutomaatApi {
         std::string apiResponse;
 
         std::map<std::string, std::string> getDefaultQueryArray();
-        int getIntegerFromResponse();
+        int getIntegerFromApiResponse();
         void setApiData(std::map<std::string, std::string> queryMap);
 };
 

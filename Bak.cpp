@@ -69,7 +69,7 @@ void Bak::performMoneyDropping()
             }
 
             if(amountPerTrunk[i] == 0) {
-                r->turnOff(i);
+                relay->turnOff(i);
                 break;
             }
         }
