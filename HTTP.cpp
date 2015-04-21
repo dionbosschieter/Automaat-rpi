@@ -30,7 +30,7 @@ HTTP::~HTTP()
 /**
 * Set the url for the current request
 */
-HTTP::setUrl(char const *url)
+void HTTP::setUrl(char const *url)
 {
     curl_easy_setopt(curl, CURLOPT_URL, url);
 }
