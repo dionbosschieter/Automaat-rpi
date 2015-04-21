@@ -6,7 +6,7 @@
 
 AutomaatApi::AutomaatApi(const char *apikey)
 {
-    client = new HTTP("/* api url here */");
+    client = new HTTP();
     this->apikey = apikey;
 }
 
@@ -17,6 +17,7 @@ AutomaatApi::~AutomaatApi()
 
 void AutomaatApi::checkTicket(char *ticketnr, char *webcode)
 {
+    client->setUrl("evlendik.nl/api/v1/checkticket");
     stringMap queryMap = getDefaultQueryArray();
     queryMap["ticketnr"] = ticketnr;
     queryMap["webcode"] = webcode;
@@ -69,6 +70,7 @@ int AutomaatApi::getTicketWinAmount()
 
 int AutomaatApi::fetchStatus()
 {
+    client->setUrl("evlendik.nl/api/v1/getstatus");
     stringMap queryMap = getDefaultQueryArray();
     std::string query = client->buildQueryFromMap(queryMap);
     client->setPostData(query);
@@ -79,6 +81,7 @@ int AutomaatApi::fetchStatus()
 
 void AutomaatApi::pushStatus(std::string status)
 {
+    client->setUrl("evlendik.nl/api/v1/setstatus");
     stringMap queryMap = getDefaultQueryArray();
     queryMap["status"] = status;
 
@@ -86,4 +89,3 @@ void AutomaatApi::pushStatus(std::string status)
     client->setPostData(query);
     apiResponse = client->getResponse();
 }
-

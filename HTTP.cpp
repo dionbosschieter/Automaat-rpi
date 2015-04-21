@@ -6,14 +6,11 @@
 
 using namespace std;
 
-HTTP::HTTP(char const *url)
+HTTP::HTTP()
 {
     CURLcode res;
     // Get a curl handle
     curl = curl_easy_init();
-
-    // Set the url
-    curl_easy_setopt(curl, CURLOPT_URL, url);
 
     res = curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
     if (res != CURLE_OK)
@@ -31,6 +28,14 @@ HTTP::~HTTP()
 }
 
 /**
+* Set the url for the current request
+*/
+HTTP::setUrl(char const *url)
+{
+    curl_easy_setopt(curl, CURLOPT_URL, url);
+}
+
+/**
 * libcurl write callback function
 */
 int HTTP::writer(char *data, size_t size, size_t nmemb, std::string *writerData)
@@ -45,7 +50,7 @@ int HTTP::writer(char *data, size_t size, size_t nmemb, std::string *writerData)
 
 void HTTP::setPostData(std::string postData)
 {
-    // build the POST data and set it 
+    // build the POST data and set it
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
 }
 

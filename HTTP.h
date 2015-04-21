@@ -13,10 +13,11 @@
 class HTTP {
 
     public:
-        HTTP(char const *url);
+        HTTP();
         ~HTTP();
         std::string getResponse();
         void setPostData(std::string postData);
+        void setUrl(char const *url);
         std::string buildQueryFromMap(std::map<std::string, std::string> queryArray);
 
     private:
