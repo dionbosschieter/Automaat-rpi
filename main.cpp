@@ -63,9 +63,9 @@ int main()
     {
         bak->fetchBillAvailable();
 
-//        api->pushStatus(IDLE);
+        api->pushStatus(IDLE);
         getInput("Enter ticket nr:", ticketnr, screen, keypad);
-//        api->pushStatus(BUSY);
+        api->pushStatus(BUSY);
         getInput("Enter webcode:", webcode, screen, keypad);
 
         api->checkTicket(ticketnr, webcode);

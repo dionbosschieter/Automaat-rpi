@@ -21,7 +21,8 @@ void AutomaatApi::checkTicket(char *ticketnr, char *webcode)
     queryMap["ticketnr"] = ticketnr;
     queryMap["webcode"] = webcode;
 
-    client->buildQueryFromMap(queryMap);
+    std::string query = client->buildQueryFromMap(queryMap);
+    client->setPostData(query);
     apiResponse = client->getResponse();
 }
 
@@ -69,7 +70,8 @@ int AutomaatApi::getTicketWinAmount()
 int AutomaatApi::fetchStatus()
 {
     stringMap queryMap = getDefaultQueryArray();
-    client->buildQueryFromMap(queryMap);
+    std::string query = client->buildQueryFromMap(queryMap);
+    client->setPostData(query);
     apiResponse = client->getResponse();
 
     return getIntegerFromApiResponse();
@@ -80,7 +82,8 @@ void AutomaatApi::pushStatus(std::string status)
     stringMap queryMap = getDefaultQueryArray();
     queryMap["status"] = status;
 
-    client->buildQueryFromMap(queryMap);
+    std::string query = client->buildQueryFromMap(queryMap);
+    client->setPostData(query);
     apiResponse = client->getResponse();
 }
 
