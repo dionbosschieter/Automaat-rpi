@@ -21,6 +21,7 @@ class Bak {
     private:
         const int trunkBilltype[4] = {50, 20, 10, 5};
         int amountPerTrunk[4] = {0, 0, 0, 0};
+        int amount;
         StepperMotor *motor;
         Relay *relay;
         AutomaatApi *api;
@@ -28,6 +29,7 @@ class Bak {
         void calculateAmountOfTurns(int amount);
         void performMoneyDropping();
         void resetAmountPerBak();
+        void setAmountOfTurnsForTrunk(int index);
 
 };
 

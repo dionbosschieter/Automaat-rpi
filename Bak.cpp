@@ -17,6 +17,9 @@ Bak::~Bak()
    delete relay;
 }
 
+/**
+ * Fetches the state of each trunk from the api
+ */
 void Bak::fetchBillAvailable()
 {
     api->fetchTrunkStateByNumber(1);
@@ -25,6 +28,9 @@ void Bak::fetchBillAvailable()
     api->fetchTrunkStateByNumber(4);
 }
 
+/**
+ * Pushes the state for each trunk to the api
+ */
 void Bak::pushBillAvailable()
 {
     api->pushTrunkStateByNumber(1);
@@ -42,18 +48,21 @@ void Bak::giveMoney(int amount)
 
 void Bak::calculateAmountOfTurns(int amount)
 {
-    for(int i=0;i<4;i++) {
-        for(;;) {
-            if(amount >= trunkBilltype[i]) {
-                amount -= trunkBilltype[i];
-                amountPerTrunk[i]++; // register the amount
-            }
+    this->amount = amount;
 
-            if(trunkBilltype[i] > amount)
-                break;
+    //set smount of turns for each trunk
+    for(int trunkIndex=0;trunkIndex<4;trunkIndex++)
+        setAmountOfTurnsForTrunk(trunkIndex);
+}
+
+void Bak::setAmountOfTurnsForTrunk(int index)
+{
+    while(trunkBilltype[index] > amount) {
+        if(amount >= trunkBilltype[index]) {
+            amount -= trunkBilltype[index];
+            amountPerTrunk[index]++; // register the amount
         }
     }
-
 }
 
 void Bak::resetAmountPerBak()
