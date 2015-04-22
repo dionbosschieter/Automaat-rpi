@@ -31,6 +31,7 @@ class Bak {
         void performMoneyDropping();
         void resetAmountPerBak();
         void setAmountOfTurnsForTrunk(int index);
+        void turnTrunk(int trunkIndex);
 
 };
 

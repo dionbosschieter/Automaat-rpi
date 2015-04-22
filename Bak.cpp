@@ -1,6 +1,7 @@
 //
 // Created by Dion Bosschieter on 12-04-15.
 //
+// This class actually begs for another class called Trunk
 
 #include "Bak.h"
 
@@ -57,13 +58,12 @@ void Bak::calculateAmountOfTurns(int amount)
 
 void Bak::setAmountOfTurnsForTrunk(int index)
 {
-    while(trunkBilltype[index] > amount) {
-        if(amount >= trunkBilltype[index]) {
-            //if we have enough in our trunks
-            amount -= trunkBilltype[index];
-            amountOfTurnsPerTrunk[index]++; // register the amount
-            //else break
-        }
+    while(amount >= trunkBilltype[index] && availablePerTrunk[index] > 0) {
+
+        amount -= trunkBilltype[index];
+        amountOfTurnsPerTrunk[index]++; // register the amount
+        availablePerTrunk[index]--; //remove amount from available
+
     }
 }
 
@@ -76,19 +76,21 @@ void Bak::resetAmountPerBak()
 
 void Bak::performMoneyDropping()
 {
-    for(int i=0; i<4;i++) {
-        for(;;) {
-            // turn until we are done with this drawer
-            if(amountOfTurnsPerTrunk[i] > 0) {
-                relay->turnOn(i);
-                motor->forward();
-                amountOfTurnsPerTrunk[i]--;
-            }
-
-            if(amountOfTurnsPerTrunk[i] == 0) {
-                relay->turnOff(i);
-                break;
-            }
-        }
+    for(int trunkIndex=0; trunkIndex<4;trunkIndex++) {
+        if(amountOfTurnsPerTrunk[trunkIndex] == 0) continue;
+        turnTrunk(trunkIndex);
     }
+}
+
+void Bak::turnTrunk(int trunkIndex)
+{
+    relay->turnOn(trunkIndex);
+
+    while(amountOfTurnsPerTrunk[trunkIndex] > 0) {
+        // turn until we are done with this drawer
+        motor->forward();
+        amountOfTurnsPerTrunk[trunkIndex]--;
+    }
+
+    relay->turnOff(trunkIndex);
 }
