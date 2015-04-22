@@ -20,7 +20,8 @@ class Bak {
 
     private:
         const int trunkBilltype[4] = {50, 20, 10, 5};
-        int amountPerTrunk[4] = {0, 0, 0, 0};
+        int amountOfTurnsPerTrunk[4] = {0, 0, 0, 0};
+        int availablePerTrunk[4] = {0, 0, 0, 0};
         int amount;
         StepperMotor *motor;
         Relay *relay;

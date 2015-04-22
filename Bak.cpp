@@ -22,10 +22,10 @@ Bak::~Bak()
  */
 void Bak::fetchBillAvailable()
 {
-    api->fetchTrunkStateByNumber(1);
-    api->fetchTrunkStateByNumber(2);
-    api->fetchTrunkStateByNumber(3);
-    api->fetchTrunkStateByNumber(4);
+    availablePerTrunk[0] = api->fetchTrunkStateByNumber(1);
+    availablePerTrunk[1] = api->fetchTrunkStateByNumber(2);
+    availablePerTrunk[2] = api->fetchTrunkStateByNumber(3);
+    availablePerTrunk[3] = api->fetchTrunkStateByNumber(4);
 }
 
 /**
@@ -33,10 +33,10 @@ void Bak::fetchBillAvailable()
  */
 void Bak::pushBillAvailable()
 {
-    api->pushTrunkStateByNumber(1);
-    api->pushTrunkStateByNumber(2);
-    api->pushTrunkStateByNumber(3);
-    api->pushTrunkStateByNumber(4);
+    api->pushTrunkStateByNumber(availablePerTrunk[0]);
+    api->pushTrunkStateByNumber(availablePerTrunk[1]);
+    api->pushTrunkStateByNumber(availablePerTrunk[2]);
+    api->pushTrunkStateByNumber(availablePerTrunk[3]);
 }
 
 void Bak::giveMoney(int amount)
@@ -59,16 +59,18 @@ void Bak::setAmountOfTurnsForTrunk(int index)
 {
     while(trunkBilltype[index] > amount) {
         if(amount >= trunkBilltype[index]) {
+            //if we have enough in our trunks
             amount -= trunkBilltype[index];
-            amountPerTrunk[index]++; // register the amount
+            amountOfTurnsPerTrunk[index]++; // register the amount
+            //else break
         }
     }
 }
 
 void Bak::resetAmountPerBak()
 {
-   for(int i = 0;i<4;i++) {
-       amountPerTrunk[i] = 0;
+   for(int trunkIndex = 0;trunkIndex<4;trunkIndex++) {
+       amountOfTurnsPerTrunk[trunkIndex] = 0;
    }
 }
 
@@ -77,13 +79,13 @@ void Bak::performMoneyDropping()
     for(int i=0; i<4;i++) {
         for(;;) {
             // turn until we are done with this drawer
-            if(amountPerTrunk[i] > 0) {
+            if(amountOfTurnsPerTrunk[i] > 0) {
                 relay->turnOn(i);
                 motor->forward();
-                amountPerTrunk[i]--;
+                amountOfTurnsPerTrunk[i]--;
             }
 
-            if(amountPerTrunk[i] == 0) {
+            if(amountOfTurnsPerTrunk[i] == 0) {
                 relay->turnOff(i);
                 break;
             }
