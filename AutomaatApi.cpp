@@ -89,3 +89,27 @@ void AutomaatApi::pushStatus(std::string status)
     client->setPostData(query);
     apiResponse = client->getResponse();
 }
+
+int AutomaatApi::fetchTrunkStateByNumber(int number)
+{
+    client->setUrl("evlendik.nl/api/v1/gettrunkstate");
+    stringMap queryMap = getDefaultQueryArray();
+    queryMap["status"] = status;
+
+    std::string query = client->buildQueryFromMap(queryMap);
+    client->setPostData(query);
+    apiResponse = client->getResponse();
+
+    return getIntegerFromApiResponse();
+}
+
+void AutomaatApi::pushTrunkStateByNumber(int number)
+{
+    client->setUrl("evlendik.nl/api/v1/settrunkstate");
+    stringMap queryMap = getDefaultQueryArray();
+    queryMap["status"] = status;
+
+    std::string query = client->buildQueryFromMap(queryMap);
+    client->setPostData(query);
+    apiResponse = client->getResponse();
+}

@@ -23,6 +23,8 @@ class AutomaatApi {
         int getTicketWinAmount();
         int fetchStatus();
         void pushStatus(std::string status);
+        int fetchTrunkStateByNumber(int number);
+        void pushTrunkStateByNumber(int number);
 
     private:
         HTTP *client;

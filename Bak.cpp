@@ -19,12 +19,18 @@ Bak::~Bak()
 
 void Bak::fetchBillAvailable()
 {
-
+    api->fetchTrunkStateByNumber(1);
+    api->fetchTrunkStateByNumber(2);
+    api->fetchTrunkStateByNumber(3);
+    api->fetchTrunkStateByNumber(4);
 }
 
 void Bak::pushBillAvailable()
 {
-    
+    api->pushTrunkStateByNumber(1);
+    api->pushTrunkStateByNumber(2);
+    api->pushTrunkStateByNumber(3);
+    api->pushTrunkStateByNumber(4);
 }
 
 void Bak::giveMoney(int amount)
