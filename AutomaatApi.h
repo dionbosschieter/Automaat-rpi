@@ -24,7 +24,7 @@ class AutomaatApi {
         int fetchStatus();
         void pushStatus(std::string status);
         int fetchTrunkStateByNumber(int number);
-        void pushTrunkStateByNumber(int number);
+        void pushTrunkStateByNumber(int number, int status);
 
     private:
         HTTP *client;

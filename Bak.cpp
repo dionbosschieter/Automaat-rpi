@@ -34,10 +34,10 @@ void Bak::fetchBillAvailable()
  */
 void Bak::pushBillAvailable()
 {
-    api->pushTrunkStateByNumber(availablePerTrunk[0]);
-    api->pushTrunkStateByNumber(availablePerTrunk[1]);
-    api->pushTrunkStateByNumber(availablePerTrunk[2]);
-    api->pushTrunkStateByNumber(availablePerTrunk[3]);
+    api->pushTrunkStateByNumber(availablePerTrunk[0], 1);
+    api->pushTrunkStateByNumber(availablePerTrunk[1], 2);
+    api->pushTrunkStateByNumber(availablePerTrunk[2], 3);
+    api->pushTrunkStateByNumber(availablePerTrunk[3], 4);
 }
 
 void Bak::giveMoney(int amount)
