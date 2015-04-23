@@ -28,10 +28,10 @@ Relay::~Relay()
 
 void Relay::turnOn(int i)
 {
-    digitalWrite (pins[i], HIGH);
+    digitalWrite (pins[i - 1], HIGH);
 }
 
 void Relay::turnOff(int i)
 {
-    digitalWrite (pins[i], LOW);
+    digitalWrite (pins[i - 1], LOW);
 }

@@ -6,6 +6,7 @@
 #define _AUTOMAAT_BAK_H
 
 #include "Relay.h"
+#include "Trunk.h"
 #include "StepperMotor.h"
 #include "AutomaatApi.h"
 
@@ -26,6 +27,7 @@ class Bak {
         StepperMotor *motor;
         Relay *relay;
         AutomaatApi *api;
+        Trunk *trunks[4];
 
         void calculateAmountOfTurns(int amount);
         void performMoneyDropping();

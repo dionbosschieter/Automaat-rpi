@@ -1,7 +1,7 @@
 //
 // Created by Dion Bosschieter on 12-04-15.
 //
-// This class actually begs for another class called Trunk
+// This class is doing too much
 
 #include "Bak.h"
 
@@ -10,12 +10,22 @@ Bak::Bak(AutomaatApi *api)
     this->api = api;
     motor = new StepperMotor(12, 16, 20, 21);
     relay = new Relay(6, 13, 19, 26);
+
+    //create trunks
+    for(int i = 0; i<4;i++) {
+        trunks[i] = new Trunk( i + 1 );
+        trunks[i]->setBillType(trunkBilltype[i]);
+    }
 }
 
 Bak::~Bak()
 {
    delete motor;
    delete relay;
+
+   for(Trunk *trunk : trunks) {
+       delete trunk;
+   }
 }
 
 /**
@@ -23,10 +33,10 @@ Bak::~Bak()
  */
 void Bak::fetchBillAvailable()
 {
-    availablePerTrunk[0] = api->fetchTrunkStateByNumber(1);
-    availablePerTrunk[1] = api->fetchTrunkStateByNumber(2);
-    availablePerTrunk[2] = api->fetchTrunkStateByNumber(3);
-    availablePerTrunk[3] = api->fetchTrunkStateByNumber(4);
+    for(Trunk *trunk : trunks) {
+        int available = api->fetchTrunkStateByNumber(trunk->getNumber());
+        trunk->setAvailable(available);
+    }
 }
 
 /**
@@ -34,10 +44,9 @@ void Bak::fetchBillAvailable()
  */
 void Bak::pushBillAvailable()
 {
-    api->pushTrunkStateByNumber(availablePerTrunk[0]);
-    api->pushTrunkStateByNumber(availablePerTrunk[1]);
-    api->pushTrunkStateByNumber(availablePerTrunk[2]);
-    api->pushTrunkStateByNumber(availablePerTrunk[3]);
+    for(Trunk *trunk : trunks) {
+        api->pushTrunkStateByNumber(trunk->getAvailable());
+    }
 }
 
 void Bak::giveMoney(int amount)
@@ -47,50 +56,49 @@ void Bak::giveMoney(int amount)
     performMoneyDropping();
 }
 
+void Bak::resetAmountPerBak()
+{
+    for(Trunk *trunk : trunks) {
+        trunk->resetAmountOfTurns();
+    }
+}
+
 void Bak::calculateAmountOfTurns(int amount)
 {
     this->amount = amount;
 
-    //set smount of turns for each trunk
-    for(int trunkIndex=0;trunkIndex<4;trunkIndex++)
-        setAmountOfTurnsForTrunk(trunkIndex);
-}
-
-void Bak::setAmountOfTurnsForTrunk(int index)
-{
-    while(amount >= trunkBilltype[index] && availablePerTrunk[index] > 0) {
-
-        amount -= trunkBilltype[index];
-        amountOfTurnsPerTrunk[index]++; // register the amount
-        availablePerTrunk[index]--; //remove amount from available
-
+    //set amount of turns for each trunk
+    for(Trunk *trunk : trunks) {
+        setAmountOfTurnsForTrunk(trunk);
     }
 }
 
-void Bak::resetAmountPerBak()
+void Bak::setAmountOfTurnsForTrunk(Trunk *trunk)
 {
-   for(int trunkIndex = 0;trunkIndex<4;trunkIndex++) {
-       amountOfTurnsPerTrunk[trunkIndex] = 0;
-   }
+    while(amount >= trunk->getBillType() && trunk->getAvailable() > 0) {
+        amount -= trunk->getBillType();
+        trunk->incrementAmountOfTurns() // register the amount
+        trunk->decrementAvailable(); //remove amount from available
+    }
 }
 
 void Bak::performMoneyDropping()
 {
-    for(int trunkIndex=0; trunkIndex<4;trunkIndex++) {
-        if(amountOfTurnsPerTrunk[trunkIndex] == 0) continue;
-        turnTrunk(trunkIndex);
+    for(Trunk *trunk : trunks) {
+        if(trunk->getAmountOfTurns() == 0) continue;
+        turnTrunk(trunk);
     }
 }
 
-void Bak::turnTrunk(int trunkIndex)
+void Bak::turnTrunk(Trunk *trunk)
 {
-    relay->turnOn(trunkIndex);
+    relay->turnOn(trunk->getNumber());
 
-    while(amountOfTurnsPerTrunk[trunkIndex] > 0) {
+    while(trunk->getAmountOfTurns() > 0) {
         // turn until we are done with this drawer
         motor->forward();
-        amountOfTurnsPerTrunk[trunkIndex]--;
+        trunk->decrementAmountOfTurns();
     }
 
-    relay->turnOff(trunkIndex);
+    relay->turnOff(trunk->getNumber());
 }
