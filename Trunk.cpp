@@ -2,6 +2,8 @@
 // Created by Dion Bosschieter on 23-04-15.
 //
 
+#include "Trunk.h"
+
 Trunk::Trunk(int number)
 {
     this->number = number;

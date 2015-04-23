@@ -77,7 +77,7 @@ void Bak::setAmountOfTurnsForTrunk(Trunk *trunk)
 {
     while(amount >= trunk->getBillType() && trunk->getAvailable() > 0) {
         amount -= trunk->getBillType();
-        trunk->incrementAmountOfTurns() // register the amount
+        trunk->incrementAmountOfTurns(); // register the amount
         trunk->decrementAvailable(); //remove amount from available
     }
 }
