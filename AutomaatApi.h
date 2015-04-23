@@ -8,6 +8,7 @@
 #include "HTTP.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <map>
 
 typedef std::map<std::string, std::string> stringMap;
@@ -24,7 +25,7 @@ class AutomaatApi {
         int fetchStatus();
         void pushStatus(std::string status);
         int fetchTrunkStateByNumber(int number);
-        void pushTrunkStateByNumber(int number);
+        void pushTrunkStateByNumber(int number, int status);
 
     private:
         HTTP *client;
@@ -33,6 +34,7 @@ class AutomaatApi {
 
         stringMap getDefaultQueryArray();
         int getIntegerFromApiResponse();
+        std::string to_string(int value);
 };
 
 

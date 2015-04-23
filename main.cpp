@@ -82,7 +82,6 @@ int main()
         screen->echo("Please wait...", 1);
         bak->giveMoney(amount);
         bak->pushBillAvailable();
-
     }
 
     // cleanup

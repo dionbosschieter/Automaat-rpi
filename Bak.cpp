@@ -45,7 +45,7 @@ void Bak::fetchBillAvailable()
 void Bak::pushBillAvailable()
 {
     for(Trunk *trunk : trunks) {
-        api->pushTrunkStateByNumber(trunk->getAvailable());
+        api->pushTrunkStateByNumber(trunk->getNumber(), trunk->getAvailable());
     }
 }
 
