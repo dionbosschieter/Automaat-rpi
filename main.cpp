@@ -1,4 +1,7 @@
 #include <iostream>
+#include <mutex>
+#include <chrono>
+#include <thread>
 
 // Custom classes
 #include "AutomaatApi.h"
@@ -9,6 +12,26 @@
 
 const std::string IDLE = "1";
 const std::string BUSY = "2";
+const int CLOSETRUNKS = 3;
+const char *APIKEY = "/* api key here */";
+
+void backgroundApiCheck(std::mutex *userLock, Bak *bak)
+{
+    AutomaatApi* api = new AutomaatApi(APIKEY);
+    for(;;)
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        //pol for status
+        if(api->fetchStatus() == CLOSETRUNKS) {
+            userLock->lock();
+            bak->closeTrunks();
+            api->pushStatus(IDLE);
+            userLock->unlock();
+        }
+    }
+    delete api;
+}
 
 void getInput(const char *msg, char *buffer, Screen *s, KeyPad *k)
 {
@@ -52,9 +75,12 @@ int main()
     wiringPiSetupGpio();
 
     Screen* screen = new Screen(14, 15, 25, 24, 23, 18);
-    AutomaatApi* api = new AutomaatApi("/* api key here */");
+    AutomaatApi* api = new AutomaatApi(APIKEY);
     KeyPad* keypad = new KeyPad(17, 27, 22, 10, 9, 11, 5);
     Bak* bak = new Bak(api);
+    api->fetchStatus();
+    std::mutex userLock;
+    std::thread backgroundApiChecker(backgroundApiCheck, &userLock, bak);
 
     char ticketnr[16];
     char webcode[16];
@@ -66,11 +92,13 @@ int main()
         api->pushStatus(IDLE);
         getInput("Enter ticket nr:", ticketnr, screen, keypad);
         api->pushStatus(BUSY);
+        userLock.lock();
         getInput("Enter webcode:", webcode, screen, keypad);
 
         api->checkTicket(ticketnr, webcode);
         if(api->errorHasOccured()) {
             showError(api->getErrorMessage(), screen, keypad);
+            userLock.unlock();
             continue;
         }
 
@@ -82,6 +110,7 @@ int main()
         screen->echo("Please wait...", 1);
         bak->giveMoney(amount);
         bak->pushBillAvailable();
+        userLock.unlock();
     }
 
     // cleanup

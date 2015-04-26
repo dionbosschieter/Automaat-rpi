@@ -18,6 +18,7 @@ class Bak {
         void giveMoney(int amount);
         void fetchBillAvailable();
         void pushBillAvailable();
+        void closeTrunks();
 
     private:
         const int trunkBilltype[4] = {50, 20, 10, 5};

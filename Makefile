@@ -1,5 +1,5 @@
 program: main.o Bak.o Relay.o AutomaatApi.o Screen.o HTTP.o StepperMotor.o KeyPad.o Trunk.o
-	g++ -o main main.o Bak.o Relay.o AutomaatApi.o Screen.o HTTP.o StepperMotor.o KeyPad.o Trunk.o -std=c++11 -lwiringPi -lwiringPiDev -lcurl
+	g++ -o main main.o Bak.o Relay.o AutomaatApi.o Screen.o HTTP.o StepperMotor.o KeyPad.o Trunk.o -std=c++11 -lwiringPi -lwiringPiDev -lcurl -pthread
 
 main.o: main.cpp
 	g++ -c main.cpp -std=c++11

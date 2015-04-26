@@ -102,3 +102,15 @@ void Bak::turnTrunk(Trunk *trunk)
 
     relay->turnOff(trunk->getNumber());
 }
+
+void Bak::closeTrunks()
+{
+    for(Trunk *trunk : trunks) 
+        relay->turnOn(trunk->getNumber());
+
+    for(int i=0;i<10;i++) 
+        motor->forward();
+
+    for(Trunk *trunk : trunks) 
+        relay->turnOff(trunk->getNumber());
+}
