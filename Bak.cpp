@@ -9,7 +9,7 @@ Bak::Bak(AutomaatApi *api)
 {
     this->api = api;
     motor = new StepperMotor(12, 16, 20, 21);
-    relay = new Relay(6, 13, 19, 26);
+    relay = new Relay(6, 26, 13, 19);
 
     //create trunks
     for(int i = 0; i<4;i++) {
@@ -108,8 +108,8 @@ void Bak::closeTrunks()
     for(Trunk *trunk : trunks) 
         relay->turnOn(trunk->getNumber());
 
-    for(int i=0;i<10;i++) 
-        motor->forward();
+    for(int i=0;i<12;i++) 
+        motor->backward();
 
     for(Trunk *trunk : trunks) 
         relay->turnOff(trunk->getNumber());

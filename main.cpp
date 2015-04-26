@@ -78,7 +78,6 @@ int main()
     AutomaatApi* api = new AutomaatApi(APIKEY);
     KeyPad* keypad = new KeyPad(17, 27, 22, 10, 9, 11, 5);
     Bak* bak = new Bak(api);
-    api->fetchStatus();
     std::mutex userLock;
     std::thread backgroundApiChecker(backgroundApiCheck, &userLock, bak);
 
@@ -87,8 +86,6 @@ int main()
 
     for(;;)
     {
-        bak->fetchBillAvailable();
-
         api->pushStatus(IDLE);
         getInput("Enter ticket nr:", ticketnr, screen, keypad);
         api->pushStatus(BUSY);
@@ -108,8 +105,11 @@ int main()
         sprintf(msg, "Giving %i EUR", amount);
         screen->echo(msg, 0);
         screen->echo("Please wait...", 1);
+
+        bak->fetchBillAvailable();
         bak->giveMoney(amount);
         bak->pushBillAvailable();
+
         userLock.unlock();
     }
 

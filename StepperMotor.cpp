@@ -4,7 +4,7 @@
 
 #include "StepperMotor.h"
 
-int StepperMotor::timeout = 20;
+int StepperMotor::timeout = 10;
 int StepperMotor::totalSteps = 100;//350
 
 StepperMotor::StepperMotor(int pin1, int pin2, int pin3, int pin4)
